@@ -3,15 +3,17 @@
 > A low-cost embedded multi-point flow monitoring system for pipeline leakage detection using differential flow analysis and physical flow verification.
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Publication-IEEE%20Xplore-blue">
-  <img src="https://img.shields.io/badge/Indexing-Scopus%20Indexed-orange">
-  <img src="https://img.shields.io/badge/ESP32-Embedded%20Controller-red">
-  <img src="https://img.shields.io/badge/Arduino-IDE-00979D">
-  <img src="https://img.shields.io/badge/Node.js-Backend-green">
-  <img src="https://img.shields.io/badge/MongoDB-Database-darkgreen">
-  <img src="https://img.shields.io/badge/IoT-Web%20Monitoring-blue">
-  <img src="https://img.shields.io/badge/License-MIT-success">
+  <img src="Images/Block%20Diagram.jpeg" alt="System Architecture" width="850">
 </p>
+
+![Publication](https://img.shields.io/badge/Publication-IEEE%20Xplore-blue)
+![Indexing](https://img.shields.io/badge/Scopus-Indexed-orange)
+![ESP32](https://img.shields.io/badge/ESP32-Embedded%20Controller-red)
+![Arduino](https://img.shields.io/badge/Arduino-IDE-00979D)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen)
+![IoT](https://img.shields.io/badge/IoT-Web%20Monitoring-blue)
+![License](https://img.shields.io/badge/License-MIT-success)
 
 ---
 
@@ -74,10 +76,6 @@ The system uses three flow measurement points:
 
 The ESP32 processes sensor pulse signals and performs the primary leakage verification locally.
 
-<p align="center">
-  <img src="Images/Block_Diagram.png" alt="System Architecture" width="850">
-</p>
-
 ### Hardware Components
 
 | Component | Qty. | Purpose |
@@ -137,14 +135,16 @@ Leakage is confirmed only when the physical flow measurement satisfies the verif
 
 ### Alarm Response
 
-After confirmation, the system activates the buzzer, records the event, and updates the dashboard. The primary leakage decision is performed locally by the ESP32.
+After confirmation, the system activates the buzzer, records the event, and updates the dashboard.
+
+The primary leakage decision is performed locally by the ESP32.
 
 ---
 
 ## 🔁 Detection Algorithm
 
 <p align="center">
-  <img src="Images/Flowchart.png" alt="Leakage Detection Flowchart" width="800">
+  <img src="Images/Flowchart.jpeg" alt="Leakage Detection Flowchart" width="800">
 </p>
 
 The detection sequence is:
@@ -163,6 +163,10 @@ The detection sequence is:
 
 The laboratory prototype uses a PVC pipeline with three flow measurement points.
 
+<p align="center">
+  <img src="Images/Hardware%20Setup.jpeg" alt="Laboratory Hardware Setup" width="800">
+</p>
+
 The setup includes two YFS201 sensors, one YFS401 sensor, an ESP32, PVC pipeline and leakage branch, water pump, buzzer, and regulated power supply.
 
 The intermediate flow sensor provides physical measurement of diverted flow for leakage verification.
@@ -171,27 +175,23 @@ The intermediate flow sensor provides physical measurement of diverted flow for 
 
 ## 🌐 Web Dashboard
 
-The Node.js-based dashboard provides a supervisory interface for monitoring the system.
+The monitoring architecture provides a supervisory interface for the experimental system.
 
-<p align="center">
-  <img src="Results/Dashboard.png" alt="Web Dashboard" width="850">
-</p>
-
-It displays:
+The dashboard is intended to display:
 
 - Inlet flow
 - Outlet flow
 - Intermediate flow
 - Leakage status
-- Historical event logging
+- Historical event information
 
-The dashboard is used for monitoring and visualization. Leakage detection and alarm decisions are performed by the ESP32.
+The primary leakage detection and alarm decisions are performed by the ESP32.
 
 ---
 
 ## 🧪 Experimental Validation
 
-The system was evaluated under three operating conditions:
+The system was evaluated under three operating conditions.
 
 ### Normal Flow
 
@@ -210,6 +210,8 @@ The system was evaluated under three operating conditions:
 - Pump switching
 - Rapid valve operation
 - Temporary hydraulic imbalance
+
+These tests evaluated both leakage detection and rejection of transient disturbances.
 
 ---
 
@@ -243,13 +245,45 @@ A total of **50 experimental trials** were conducted.
 | **Specificity** | **100%** |
 | **False Positive Rate** | **0%** |
 
-<p align="center">
-  <img src="Results/Result_Graph.png" alt="Experimental Results" width="800">
-</p>
-
 The results indicate that the system correctly identified most induced leakage events while producing no false-positive detections during the tested transient conditions.
 
 > **Note:** These results are based on laboratory-scale experimental trials and should not be interpreted as industrial-scale validation.
+
+---
+
+## 📈 Experimental Result Visualizations
+
+The `Results/` directory contains the experimental result visualizations generated during the project.
+
+### Leakage Detection
+
+<p align="center">
+  <img src="Results/Leakage%20Detected.png" alt="Leakage Detection Result" width="800">
+</p>
+
+### Normal vs. Leak Comparison
+
+<p align="center">
+  <img src="Results/Normal%20vs%20Leak%20Chart.png" alt="Normal versus Leak Comparison" width="800">
+</p>
+
+### Leak Magnitude vs. Middle Sensor Output
+
+<p align="center">
+  <img src="Results/Leak%20Magnitude%20vs%20Middle%20Sensor%20Output.png" alt="Leak Magnitude versus Middle Sensor Output" width="800">
+</p>
+
+### Time-Series Flow Deviation During Leakage
+
+<p align="center">
+  <img src="Results/Time-Series%20Variation%20of%20Inlet%E2%80%93Outlet%20Flow%20Deviation%20During%20Leak%20Occurrence.png" alt="Time-Series Flow Deviation During Leak Occurrence" width="800">
+</p>
+
+### Encryption Result
+
+<p align="center">
+  <img src="Results/Encryption.jpeg" alt="Encryption Result" width="800">
+</p>
 
 ---
 
@@ -259,18 +293,17 @@ The results indicate that the system correctly identified most induced leakage e
 multi-point-pipeline-leakage-detection/
 │
 ├── Images/
-│   ├── Block_Diagram.png
-│   ├── Flowchart.png
-│   └── Hardware_Setup.jpg
-│
-├── Publication/
-│   └── README.md
+│   ├── Block Diagram.jpeg
+│   ├── Flowchart.jpeg
+│   └── Hardware Setup.jpeg
 │
 ├── Results/
-│   ├── Experimental_Data.xlsx
-│   ├── Performance_Graphs.pdf
-│   ├── Result_Graph.png
-│   └── Dashboard.png
+│   ├── Encryption.jpeg
+│   ├── Leak Magnitude vs Middle Sensor Output.png
+│   ├── Leakage Detected.png
+│   ├── Normal vs Leak Chart.png
+│   ├── Time-Series Variation of Inlet–Outlet Flow Deviation During Leak Occurrence.png
+│   └── README.md
 │
 ├── LICENSE
 └── README.md
@@ -280,21 +313,26 @@ multi-point-pipeline-leakage-detection/
 
 | Directory / File | Contents |
 |---|---|
-| `Images/` | Block diagram, flowchart, hardware setup |
-| `Results/` | Experimental data, graphs, dashboard |
-| `Publication/` | Publication information |
+| `Images/` | Block diagram, flowchart, and hardware setup |
+| `Results/` | Experimental result visualizations |
 | `LICENSE` | MIT License |
-| `README.md` | Project overview and technical summary |
+| `README.md` | Main project documentation |
 
-Detailed experimental data and performance graphs are available in the `Results/` directory.
+The repository no longer contains a separate `Publication/` directory. Publication information and the IEEE Xplore link are provided directly in this README.
 
 ---
 
 ## 🚀 Getting Started
 
-Assemble the pipeline using the listed components, with the two YFS201 sensors at the inlet and outlet and the YFS401 sensor at the intermediate branch.
+### Hardware
+
+Assemble the pipeline using the components listed in the hardware section.
+
+The two YFS201 sensors are used for inlet and outlet measurement, while the YFS401 sensor is used at the intermediate branch for physical verification.
 
 Connect the sensors and buzzer to the ESP32 and provide the required regulated power supply.
+
+### Embedded System
 
 The ESP32 performs:
 
@@ -304,15 +342,57 @@ The ESP32 performs:
 - Alarm control
 - Communication with the monitoring system
 
-The monitoring interface uses Node.js, MongoDB, HTML, CSS, JavaScript, and Wi-Fi communication.
+### Monitoring System
 
-> Source implementation files are not included in the current repository. The repository is organized as a project, research, and results showcase.
+The monitoring architecture uses Node.js, MongoDB, HTML, CSS, JavaScript, and Wi-Fi communication.
+
+> Source implementation files are not included in the current repository. The repository is organized primarily as a project, research, and experimental-results showcase.
 
 ---
 
-## 📄 Publication
+## 🧪 Basic Testing Procedure
 
-This work was published at the **International Conference on Smart Electronic Devices and Intelligent Systems (ICSEDIS 2026)**.
+### Test 1 — Normal Operation
+
+1. Start the water pump.
+2. Allow the system to reach stable flow.
+3. Observe the inlet and outlet measurements.
+4. Verify that no intentional leakage is present.
+5. Observe the intermediate sensor.
+6. Confirm that no leakage alarm is generated.
+
+**Expected Result:** Normal operation without a confirmed leakage event.
+
+### Test 2 — Induced Leakage
+
+1. Establish normal pipeline flow.
+2. Introduce controlled leakage through the branch.
+3. Observe the inlet–outlet flow deviation.
+4. Observe the intermediate sensor.
+5. Verify the physical flow condition.
+6. Observe the leakage indication.
+
+**Expected Result:** Leakage is confirmed and the alarm is activated.
+
+### Test 3 — Transient Disturbance
+
+1. Establish normal pipeline operation.
+2. Start or stop the pump, or operate the valve rapidly.
+3. Observe the temporary flow imbalance.
+4. Monitor the intermediate sensor.
+5. Observe the leakage decision.
+
+**Expected Result:** No confirmed leakage under the tested transient conditions.
+
+---
+
+## 📄 Research Publication
+
+This work was published at the:
+
+**International Conference on Smart Electronic Devices and Intelligent Systems (ICSEDIS 2026)**
+
+### Publication Details
 
 | Item | Details |
 |---|---|
@@ -322,47 +402,40 @@ This work was published at the **International Conference on Smart Electronic De
 | DOI | 10.1109/ICSEDIS68157.2026.11518189 |
 | ISBN | 979-8-3315-8824-3 |
 
-The publisher-formatted IEEE paper is not included in this repository.
+### IEEE Xplore
+
+[View the published research paper on IEEE Xplore](https://ieeexplore.ieee.org/document/11518189)
 
 ---
 
 ## 👨‍💻 My Contribution
 
-My primary contributions included:
+My primary contributions to the project included:
 
 - Hardware assembly and system integration
 - Experimental setup and testing
 - Data collection and validation
 - Technical documentation
-- Research paper preparation and writing
+- Research paper preparation
+- Research paper writing
 
 ---
 
 ## 🔮 Future Scope
 
-Potential extensions include:
+Potential extensions of the system include:
 
 - Industrial SCADA integration
 - Adaptive threshold optimization
-- Modbus TCP, MQTT, or OPC UA communication
-- Cloud-based analytics and remote alerts
+- OPC UA integration
+- Cloud-based analytics
+- Remote alert notifications
 - AI/ML-based leakage classification
 - Large-scale pipeline deployment
+- Automated leakage localization
+- Mobile monitoring
 
 These are proposed future extensions and were not part of the reported experimental validation.
-
----
-
-## 👥 Authors
-
-| Name | Role |
-|---|---|
-| **Praveen V. Pol** | Guide |
-| **Vikas J. Nandeshwar** | Student Researcher |
-| **Tejas R. Kulkarni** | Student Researcher |
-| **Sejal M. Mankawade** | Student Researcher |
-| **Aditya V. Kulsange** | Student Researcher |
-| **Samadhan S. Kendre** | Student Researcher |
 
 ---
 
