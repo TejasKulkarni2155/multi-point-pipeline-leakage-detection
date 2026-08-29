@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Publication-IEEE%20Xplore-blue">
-  <img src="https://img.shields.io/badge/Indexing-Scopus-Indexed-orange">
+  <img src="https://img.shields.io/badge/Indexing-Scopus%20Indexed-orange">
   <img src="https://img.shields.io/badge/ESP32-Embedded%20Controller-red">
   <img src="https://img.shields.io/badge/Arduino-IDE-00979D">
   <img src="https://img.shields.io/badge/Node.js-Backend-green">
