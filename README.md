@@ -7,23 +7,21 @@
 </p>
 
 <p align="center">
-
-![Publication](https://img.shields.io/badge/Publication-IEEE%20Xplore-blue)
-![Indexing](https://img.shields.io/badge/Scopus-Indexed-orange)
-![ESP32](https://img.shields.io/badge/ESP32-Embedded%20Controller-red)
-![Arduino](https://img.shields.io/badge/Arduino-IDE-00979D)
-![NodeJS](https://img.shields.io/badge/Node.js-Backend-green)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen)
-![IoT](https://img.shields.io/badge/IoT-Web%20Monitoring-blue)
-![License](https://img.shields.io/badge/License-MIT-success)
-
+  ![Publication](https://img.shields.io/badge/Publication-IEEE%20Xplore-blue)
+  ![Indexing](https://img.shields.io/badge/Scopus-Indexed-orange)
+  ![ESP32](https://img.shields.io/badge/ESP32-Embedded%20Controller-red)
+  ![Arduino](https://img.shields.io/badge/Arduino-IDE-00979D)
+  ![NodeJS](https://img.shields.io/badge/Node.js-Backend-green)
+  ![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen)
+  ![IoT](https://img.shields.io/badge/IoT-Web%20Monitoring-blue)
+  ![License](https://img.shields.io/badge/License-MIT-success)
 </p>
 
 ---
 
 ## 📖 Overview
 
-Pipeline leakage can cause significant water loss, operational inefficiency, equipment damage, and financial losses. Conventional approaches based on pressure monitoring or inlet–outlet flow comparison may generate false alarms during transient hydraulic conditions such as pump switching and rapid valve operation.
+Pipeline leakage can cause water loss, operational inefficiency, equipment damage, and financial losses. Conventional approaches based on pressure monitoring or inlet–outlet flow comparison may generate false alarms during transient hydraulic conditions such as pump switching and rapid valve operation.
 
 This project presents a **Multi-Point Flow Monitoring System** that combines differential flow measurement with **physical verification of diverted flow**. Three turbine flow sensors are connected to an ESP32, which performs leakage detection locally. A Node.js-based web dashboard provides real-time monitoring and event logging.
 
@@ -64,8 +62,7 @@ The system was experimentally evaluated under normal flow, induced leakage, and 
 - Wi-Fi communication
 - Web-based monitoring dashboard
 - Historical event logging
-- Low-cost laboratory-scale implementation
-- No dependence on continuous cloud connectivity for detection
+- No continuous cloud dependency for leakage detection
 
 ---
 
@@ -73,11 +70,13 @@ The system was experimentally evaluated under normal flow, induced leakage, and 
 
 The system uses three flow measurement points:
 
-1. **Inlet Flow Sensor** — measures incoming pipeline flow.
-2. **Outlet Flow Sensor** — measures outgoing pipeline flow.
-3. **Intermediate Flow Sensor** — measures physically diverted flow through the leakage branch.
+| Measurement Point | Sensor | Purpose |
+|---|---|---|
+| Inlet | YFS201 | Incoming pipeline flow |
+| Outlet | YFS201 | Outgoing pipeline flow |
+| Intermediate | YFS401 | Diverted-flow verification |
 
-The ESP32 processes the sensor pulse signals and performs leakage verification locally.
+The ESP32 processes sensor pulse signals and performs the primary leakage verification locally.
 
 <p align="center">
   <img src="Images/Block_Diagram.png" alt="System Architecture" width="850">
@@ -85,15 +84,15 @@ The ESP32 processes the sensor pulse signals and performs leakage verification l
 
 ### Hardware Components
 
-| Component | Quantity | Purpose |
+| Component | Qty. | Purpose |
 |---|---:|---|
 | ESP32 Development Board | 1 | Embedded controller |
 | YFS201 Flow Sensor | 2 | Inlet and outlet measurement |
-| YFS401 Flow Sensor | 1 | Intermediate flow verification |
+| YFS401 Flow Sensor | 1 | Intermediate verification |
 | PVC Pipeline | 1 | Experimental pipeline |
-| PVC Tee Joint | Multiple | Leakage branch connection |
+| PVC Tee Joint | Multiple | Leakage branch |
 | Flexible Tubing | As required | Water circulation |
-| Water Pump | 1 | Continuous water circulation |
+| Water Pump | 1 | Water circulation |
 | Buzzer | 1 | Leakage alarm |
 | 12 V DC Adapter | 1 | Power supply |
 
@@ -101,12 +100,11 @@ The ESP32 processes the sensor pulse signals and performs leakage verification l
 
 | Technology | Purpose |
 |---|---|
-| Arduino IDE | ESP32 firmware development |
-| Embedded C | Leakage detection algorithm |
+| Arduino IDE / Embedded C | ESP32 firmware and detection algorithm |
 | Node.js | Backend server |
 | MongoDB | Data and event storage |
 | HTML / CSS / JavaScript | Web dashboard |
-| Wi-Fi | Wireless communication |
+| Wi-Fi | Communication |
 
 ---
 
@@ -114,41 +112,19 @@ The ESP32 processes the sensor pulse signals and performs leakage verification l
 
 The system uses a **two-stage leakage verification strategy**.
 
-### 1. Flow Measurement
+### Stage 1 — Flow Deviation
 
-Three turbine flow sensors continuously generate pulse signals proportional to the measured flow.
-
-```text
-                 Pipeline
-                    │
-                    ▼
-              Inlet Sensor
-                    │
-                    │
-                    ├──────────────► Outlet Sensor
-                    │
-                    │
-                    └────► Leakage Branch
-                              │
-                              ▼
-                       Intermediate Sensor
-```
-
-### 2. Primary Flow Deviation
-
-The ESP32 calculates the inlet–outlet flow deviation:
+The three flow sensors generate pulse signals proportional to the measured flow. The ESP32 calculates:
 
 ```text
 ΔP = Pin − Pout
 ```
 
-If the deviation remains within the predefined tolerance, the system continues normal monitoring.
+If the deviation remains within the predefined tolerance, normal monitoring continues.
 
-### 3. Physical Verification
+### Stage 2 — Physical Verification
 
-When the deviation exceeds the threshold, leakage is not immediately declared.
-
-The intermediate sensor is checked to determine whether the measured diverted flow corresponds to the observed inlet–outlet imbalance:
+When the deviation exceeds the threshold, leakage is not immediately declared. The intermediate sensor is checked to determine whether the measured diverted flow corresponds to the observed imbalance:
 
 ```text
 |(Pin − Pout) − Pmid| ≤ ε
@@ -163,19 +139,9 @@ Where:
 
 Leakage is confirmed only when the physical flow measurement satisfies the verification condition.
 
-### 4. Alarm
+### Alarm Response
 
-After leakage confirmation:
-
-```text
-Leakage Confirmed
-       │
-       ├──► Activate Buzzer
-       ├──► Log Event
-       └──► Update Dashboard
-```
-
-The ESP32 performs the primary leakage decision locally, while the dashboard provides supervisory monitoring.
+After confirmation, the system activates the buzzer, records the event, and updates the dashboard. The primary leakage decision is performed locally by the ESP32.
 
 ---
 
@@ -187,61 +153,21 @@ The ESP32 performs the primary leakage decision locally, while the dashboard pro
 
 The detection sequence is:
 
-```text
-                 START
-                   │
-                   ▼
-          Read Sensor Pulses
-                   │
-                   ▼
-       Calculate Inlet–Outlet
-             Difference
-                   │
-                   ▼
-       Difference > Threshold?
-             │          │
-            NO         YES
-             │          │
-             │          ▼
-             │   Read Intermediate
-             │       Flow Sensor
-             │          │
-             │          ▼
-             │   Does Physical Flow
-             │   Match the Deviation?
-             │        │       │
-             │       NO      YES
-             │        │       │
-             │        ▼       ▼
-             │    Ignore   Confirm
-             │   Transient Leakage
-             │        │       │
-             └────────┘       ▼
-                        Activate Alarm
-                              │
-                              ▼
-                       Update Dashboard
-```
+1. Read flow sensor pulses.
+2. Calculate the inlet–outlet deviation.
+3. Compare the deviation with the threshold.
+4. If the threshold is exceeded, read the intermediate flow.
+5. Compare the physical diverted flow with the calculated deviation.
+6. Confirm leakage only when the verification condition is satisfied.
+7. Activate the alarm and update the monitoring system.
 
 ---
 
 ## 📷 Hardware Setup
 
-The system was implemented using a laboratory-scale PVC pipeline with three flow measurement points.
+The laboratory prototype uses a PVC pipeline with three flow measurement points.
 
-<p align="center">
-  <img src="Images/Hardware_Setup.jpg" alt="Laboratory Hardware Setup" width="800">
-</p>
-
-The setup consists of:
-
-- Two YFS201 flow sensors
-- One YFS401 flow sensor
-- ESP32 development board
-- PVC pipeline and leakage branch
-- Water pump
-- Buzzer
-- Regulated power supply
+The setup includes two YFS201 sensors, one YFS401 sensor, an ESP32, PVC pipeline and leakage branch, water pump, buzzer, and regulated power supply.
 
 The intermediate flow sensor provides physical measurement of diverted flow for leakage verification.
 
@@ -249,27 +175,27 @@ The intermediate flow sensor provides physical measurement of diverted flow for 
 
 ## 🌐 Web Dashboard
 
-The system includes a Node.js-based web dashboard for supervisory monitoring.
+The Node.js-based dashboard provides a supervisory interface for monitoring the system.
 
 <p align="center">
   <img src="Results/Dashboard.png" alt="Web Dashboard" width="850">
 </p>
 
-The dashboard provides:
+It displays:
 
-- Inlet flow monitoring
-- Outlet flow monitoring
-- Intermediate flow monitoring
+- Inlet flow
+- Outlet flow
+- Intermediate flow
 - Leakage status
 - Historical event logging
 
-The dashboard is intended for monitoring and visualization. The primary leakage detection and alarm logic are executed by the ESP32.
+The dashboard is used for monitoring and visualization. Leakage detection and alarm decisions are performed by the ESP32.
 
 ---
 
 ## 🧪 Experimental Validation
 
-The system was evaluated using a laboratory-scale PVC pipeline under three operating conditions.
+The system was evaluated under three operating conditions:
 
 ### Normal Flow
 
@@ -279,7 +205,7 @@ The system was evaluated using a laboratory-scale PVC pipeline under three opera
 
 ### Induced Leakage
 
-- Controlled leakage introduced through the intermediate branch
+- Controlled leakage through the intermediate branch
 - Diverted flow measured using the intermediate sensor
 - Leakage evaluated using dual-stage verification
 
@@ -288,8 +214,6 @@ The system was evaluated using a laboratory-scale PVC pipeline under three opera
 - Pump switching
 - Rapid valve operation
 - Temporary hydraulic imbalance
-
-These tests evaluated both leakage detection and rejection of transient disturbances.
 
 ---
 
@@ -329,46 +253,7 @@ A total of **50 experimental trials** were conducted.
 
 The results indicate that the system correctly identified most induced leakage events while producing no false-positive detections during the tested transient conditions.
 
-> **Note:** These performance values are based on laboratory-scale experimental trials and should not be interpreted as industrial-scale validation.
-
----
-
-## 🔬 Multi-Point Verification
-
-A conventional two-point flow monitoring system primarily observes the difference between inlet and outlet flow.
-
-The proposed system introduces an additional physical measurement point:
-
-```text
-Conventional Approach
-
-Inlet ─────────────────► Outlet
-          │
-          ▼
-    Flow Difference
-          │
-          ▼
-   Possible Leakage
-
-
-Proposed Approach
-
-Inlet ─────────────────► Outlet
-          │
-          ▼
-    Flow Difference
-          │
-          ▼
-Intermediate Flow Sensor
-          │
-          ▼
- Physical Verification
-          │
-          ▼
-    Confirm / Reject
-```
-
-The additional measurement point provides physical evidence of diverted flow before a leakage event is confirmed.
+> **Note:** These results are based on laboratory-scale experimental trials and should not be interpreted as industrial-scale validation.
 
 ---
 
@@ -395,42 +280,25 @@ multi-point-pipeline-leakage-detection/
 └── README.md
 ```
 
----
+### Repository Contents
 
-## 📁 Repository Contents
+| Directory / File | Contents |
+|---|---|
+| `Images/` | Block diagram, flowchart, hardware setup |
+| `Results/` | Experimental data, graphs, dashboard |
+| `Publication/` | Publication information |
+| `LICENSE` | MIT License |
+| `README.md` | Project overview and technical summary |
 
-### Images
-
-The `Images/` directory contains the main visual documentation:
-
-- `Block_Diagram.png` — system architecture
-- `Flowchart.png` — leakage detection algorithm
-- `Hardware_Setup.jpg` — laboratory prototype
-
-### Results
-
-The `Results/` directory contains the experimental evidence:
-
-- `Experimental_Data.xlsx` — experimental dataset
-- `Performance_Graphs.pdf` — performance analysis
-- `Result_Graph.png` — summarized experimental results
-- `Dashboard.png` — web monitoring interface
-
-### Publication
-
-The `Publication/` directory contains information related to the published research work.
+Detailed experimental data and performance graphs are available in the `Results/` directory.
 
 ---
 
 ## 🚀 Getting Started
 
-### Hardware
+Assemble the pipeline using the listed components, with the two YFS201 sensors at the inlet and outlet and the YFS401 sensor at the intermediate branch.
 
-The experimental system can be assembled using the components listed in the **Hardware Components** section.
-
-The block diagram, flowchart, and hardware setup are available in the `Images/` directory.
-
-### Embedded System
+Connect the sensors and buzzer to the ESP32 and provide the required regulated power supply.
 
 The ESP32 performs:
 
@@ -440,56 +308,15 @@ The ESP32 performs:
 - Alarm control
 - Communication with the monitoring system
 
-### Monitoring System
+The monitoring interface uses Node.js, MongoDB, HTML, CSS, JavaScript, and Wi-Fi communication.
 
-The monitoring interface uses:
-
-- Node.js
-- MongoDB
-- HTML
-- CSS
-- JavaScript
-- Wi-Fi communication
-
-> The current repository is organized primarily as a project, research, and results showcase. Source implementation files are not included.
-
----
-
-## 🧪 Basic Testing Procedure
-
-### Test 1 — Normal Operation
-
-1. Start the water pump.
-2. Allow the system to reach stable flow.
-3. Observe inlet and outlet readings.
-4. Verify that the intermediate flow remains negligible.
-
-**Expected Result:** No leakage alarm.
-
-### Test 2 — Leakage Simulation
-
-1. Open the controlled leakage branch.
-2. Observe the intermediate sensor.
-3. Monitor the inlet–outlet deviation.
-4. Observe the leakage indication.
-
-**Expected Result:** Leakage is confirmed and the alarm is activated.
-
-### Test 3 — Transient Disturbance
-
-1. Start or stop the pump, or operate the valve rapidly.
-2. Observe the temporary flow imbalance.
-3. Monitor the leakage decision.
-
-**Expected Result:** No confirmed leakage under the tested transient conditions.
+> Source implementation files are not included in the current repository. The repository is organized as a project, research, and results showcase.
 
 ---
 
 ## 📄 Publication
 
-This work was published at the:
-
-**International Conference on Smart Electronic Devices and Intelligent Systems (ICSEDIS 2026)**
+This work was published at the **International Conference on Smart Electronic Devices and Intelligent Systems (ICSEDIS 2026)**.
 
 | Item | Details |
 |---|---|
@@ -505,7 +332,7 @@ The publisher-formatted IEEE paper is not included in this repository.
 
 ## 👨‍💻 My Contribution
 
-My primary contributions to the project included:
+My primary contributions included:
 
 - Hardware assembly and system integration
 - Experimental setup and testing
@@ -517,16 +344,14 @@ My primary contributions to the project included:
 
 ## 🔮 Future Scope
 
-Potential extensions of the system include:
+Potential extensions include:
 
-- Integration with industrial SCADA systems
+- Industrial SCADA integration
 - Adaptive threshold optimization
-- Industrial communication protocols such as Modbus TCP, MQTT, and OPC UA
-- Cloud-based analytics and remote diagnostics
-- SMS, email, or messaging-based alerts
+- Modbus TCP, MQTT, or OPC UA communication
+- Cloud-based analytics and remote alerts
 - AI/ML-based leakage classification
 - Large-scale pipeline deployment
-- Mobile-based monitoring
 
 These are proposed future extensions and were not part of the reported experimental validation.
 
