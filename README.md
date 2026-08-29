@@ -2,10 +2,6 @@
 
 > A low-cost embedded multi-point flow monitoring system for pipeline leakage detection using differential flow analysis and physical flow verification.
 
-<p align="center">
-  <img src="Images/Block%20Diagram.jpeg" alt="System Architecture" width="850">
-</p>
-
 ![Publication](https://img.shields.io/badge/Publication-IEEE%20Xplore-blue)
 ![Indexing](https://img.shields.io/badge/Scopus-Indexed-orange)
 ![ESP32](https://img.shields.io/badge/ESP32-Embedded%20Controller-red)
@@ -75,6 +71,10 @@ The system uses three flow measurement points:
 | Intermediate | YFS401 | Diverted-flow verification |
 
 The ESP32 processes sensor pulse signals and performs the primary leakage verification locally.
+
+<p align="center">
+  <img src="Images/Block%20Diagram.jpeg" alt="System Architecture" width="850">
+</p>
 
 ### Hardware Components
 
