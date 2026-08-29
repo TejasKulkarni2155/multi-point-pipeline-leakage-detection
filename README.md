@@ -3,18 +3,14 @@
 > A low-cost embedded multi-point flow monitoring system for pipeline leakage detection using differential flow analysis and physical flow verification.
 
 <p align="center">
-  <img src="Images/Hardware_Setup.jpg" alt="Laboratory Hardware Setup" width="800">
-</p>
-
-<p align="center">
-  ![Publication](https://img.shields.io/badge/Publication-IEEE%20Xplore-blue)
-  ![Indexing](https://img.shields.io/badge/Scopus-Indexed-orange)
-  ![ESP32](https://img.shields.io/badge/ESP32-Embedded%20Controller-red)
-  ![Arduino](https://img.shields.io/badge/Arduino-IDE-00979D)
-  ![NodeJS](https://img.shields.io/badge/Node.js-Backend-green)
-  ![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen)
-  ![IoT](https://img.shields.io/badge/IoT-Web%20Monitoring-blue)
-  ![License](https://img.shields.io/badge/License-MIT-success)
+  <img src="https://img.shields.io/badge/Publication-IEEE%20Xplore-blue">
+  <img src="https://img.shields.io/badge/Indexing-Scopus-Indexed-orange">
+  <img src="https://img.shields.io/badge/ESP32-Embedded%20Controller-red">
+  <img src="https://img.shields.io/badge/Arduino-IDE-00979D">
+  <img src="https://img.shields.io/badge/Node.js-Backend-green">
+  <img src="https://img.shields.io/badge/MongoDB-Database-darkgreen">
+  <img src="https://img.shields.io/badge/IoT-Web%20Monitoring-blue">
+  <img src="https://img.shields.io/badge/License-MIT-success">
 </p>
 
 ---
